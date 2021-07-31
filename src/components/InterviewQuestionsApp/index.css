@@ -5,11 +5,13 @@
   justify-content: space-around;
   align-items: center;
   background-image: radial-gradient(#2b237c, #180d5b);
+  padding-bottom: 10px;
 }
 
 @media screen and (min-width: 577px) {
   .heading-container {
     flex-direction: row;
+    padding-bottom: 0px;
   }
 }
 

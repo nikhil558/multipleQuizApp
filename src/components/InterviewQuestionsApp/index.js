@@ -15,8 +15,8 @@ class InterviewQuestionsApp extends Component {
   }
 
   getQuetions = async () => {
-    const {level, categoryNo} = this.props
-    const api = `https://opentdb.com/api.php?amount=10&category=${categoryNo}&difficulty=${level}&type=multiple`
+    const {level1, categoryNo} = this.props
+    const api = `https://opentdb.com/api.php?amount=10&category=${categoryNo}&difficulty=${level1}&type=multiple`
     const options = {
       method: 'GET',
     }
@@ -32,7 +32,7 @@ class InterviewQuestionsApp extends Component {
 
   addDataToFDatabase = async () => {
     const {storeQnsData, count} = this.state
-    const {userName} = this.props
+    const {userName, categoryNo, level1} = this.props
     const resultStatus = count >= 6 ? 'Pass' : 'Fail'
     const userDetails = {
       name: userName,
@@ -48,6 +48,8 @@ class InterviewQuestionsApp extends Component {
       tenth: storeQnsData[9],
       result: resultStatus,
       score: count,
+      category: categoryNo,
+      level: level1,
     }
     const url = 'https://quiz-application-server.herokuapp.com/results'
     const options = {

@@ -42,7 +42,7 @@ class Quiz extends Component {
       <>
         {selectDifficulty ? (
           <InterviewQuestionsApp
-            level={level}
+            level1={level}
             categoryNo={categoryNo}
             onSubmitTest={this.onSubmitTest}
             userName={name}

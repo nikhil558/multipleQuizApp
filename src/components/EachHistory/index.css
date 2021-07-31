@@ -1,0 +1,53 @@
+.each-container {
+  background-color: #ffffff;
+  box-shadow: 0px 4px 16px rgba(126, 133, 142, 0.16);
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 32px;
+  width: 88%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.name-history {
+  width: 80px;
+}
+
+.level-history {
+  width: 60px;
+  text-align: center;
+}
+.score-history {
+  width: 20px;
+  text-align: center;
+}
+
+@media screen and (min-width: 577px) {
+  .each-container {
+    width: 88%;
+    padding: 24px;
+  }
+  .name-history {
+    width: 160px;
+  }
+}
+
+.pass-color {
+  color: #12f83d;
+}
+
+.fail-color {
+  color: red;
+}
+
+.easy-color {
+  color: #12f83d;
+}
+
+.medium-color {
+  color: #f0e315;
+}
+
+.hard-color {
+  color: red;
+}

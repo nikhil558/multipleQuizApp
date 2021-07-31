@@ -27,7 +27,7 @@ class History extends Component {
 
   render() {
     const {dataHistory, dataShown} = this.state
-    console.log(dataHistory)
+    dataHistory.reverse()
     if (dataHistory.length === 0) {
       return (
         <div className="history-bg-container">

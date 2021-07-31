@@ -1,13 +1,13 @@
 import {Component} from 'react'
-
+import Timer from '../Timer'
 import InterviewQuestion from '../InterviewQuestion'
 import './index.css'
 
 class InterviewQuestionsApp extends Component {
   state = {
     questionsList: [],
-    showResult: false,
     count: 0,
+    storeQnsData: [],
   }
 
   componentDidMount() {
@@ -15,8 +15,8 @@ class InterviewQuestionsApp extends Component {
   }
 
   getQuetions = async () => {
-    const api =
-      'https://opentdb.com/api.php?amount=10&category=18&difficulty=medium&type=multiple'
+    const {level, categoryNo} = this.props
+    const api = `https://opentdb.com/api.php?amount=10&category=${categoryNo}&difficulty=${level}&type=multiple`
     const options = {
       method: 'GET',
     }
@@ -30,25 +30,68 @@ class InterviewQuestionsApp extends Component {
     this.setState({questionsList: updatedData})
   }
 
+  addDataToFDatabase = async () => {
+    const {storeQnsData, count} = this.state
+    const {userName} = this.props
+    const resultStatus = count >= 6 ? 'Pass' : 'Fail'
+    const userDetails = {
+      name: userName,
+      first: storeQnsData[0],
+      second: storeQnsData[1],
+      third: storeQnsData[2],
+      fourth: storeQnsData[3],
+      fifth: storeQnsData[4],
+      sixth: storeQnsData[5],
+      seventh: storeQnsData[6],
+      eight: storeQnsData[7],
+      ninth: storeQnsData[8],
+      tenth: storeQnsData[9],
+      result: resultStatus,
+      score: count,
+    }
+    const url = 'https://quiz-application-server.herokuapp.com/results'
+    const options = {
+      headers: {'Content-Type': 'application/json'},
+      method: 'POST',
+      body: JSON.stringify(userDetails),
+    }
+
+    const response = await fetch(url, options)
+    console.log(response)
+  }
+
   countingFun = () => {
     this.setState(prevCount => ({count: prevCount.count + 1}))
   }
 
+  dataFun = value => {
+    const {storeQnsData} = this.state
+    storeQnsData.push(value)
+    this.setState((storeQnsData: storeQnsData))
+  }
+
   totalScore = () => {
-    this.setState({showResult: true})
+    const {count} = this.state
+    const {onSubmitTest} = this.props
+    alert('Are you sure submit the test')
+    onSubmitTest(count)
+    this.addDataToFDatabase()
+  }
+
+  timeCompleted = () => {
+    const {count} = this.state
+    const {onSubmitTest} = this.props
+    onSubmitTest(count)
+    this.addDataToFDatabase()
   }
 
   render() {
-    const {questionsList, showResult, count} = this.state
+    const {questionsList} = this.state
     return (
       <div className="app-container">
         <div className="heading-container">
-          <h1 className="heading">15 Seconds of Interviews</h1>
-          <img
-            className="interview-image"
-            src="https://assets.ccbp.in/frontend/react-js/interview-questions-img.png"
-            alt="img"
-          />
+          <h1 className="heading">10 Questions for 3:00 Minutes</h1>
+          <Timer timeCompleted={this.timeCompleted} />
         </div>
         <div className="filter-container">
           <div className="questions-container">
@@ -56,6 +99,7 @@ class InterviewQuestionsApp extends Component {
               <InterviewQuestion
                 question={eachQuestion}
                 countingFun={this.countingFun}
+                dataFun={this.dataFun}
               />
             ))}
           </div>
@@ -64,7 +108,6 @@ class InterviewQuestionsApp extends Component {
           <button type="button" className="button" onClick={this.totalScore}>
             Submit
           </button>
-          {showResult && <h1>{count}/10</h1>}
         </div>
       </div>
     )

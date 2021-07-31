@@ -15,7 +15,7 @@
 
 .heading {
   color: #ffffff;
-  font-family: 'Playfair Display';
+  font-family: 'Roboto';
   font-size: 32px;
   font-weight: 700;
   width: 200px;
@@ -56,10 +56,14 @@
   background-color: darkblue;
   color: white;
   border-radius: 8px;
+  border: 0px;
 }
 .score {
   margin-left: 100px;
 }
 .submission_container {
   text-align: center;
+}
+.app-container {
+  padding-bottom: 20px;
 }
